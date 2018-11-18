@@ -18,6 +18,9 @@ Toutes les extentions se trouves dans le dossier *Extentions*
 
 Toute les commandes seront listé ici ainsi que différente explications sur l'utilisation du Core et son instalations.
 
+* /nomrp (texte) permet de choisir Son nom et prénom RolePlay ( /nomrp Alexis Lafaille)
+* /nomreset (joueurs) permet de réinitialiser le nom RolePlay d'un joueurs
+
 # Extention
 
 Les Extention seront des ajouts possibles au Core qui seront sous forme de Skript séparé, il ne font pas partie du Core principal et sont intièrement facultatif
