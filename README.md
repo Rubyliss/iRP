@@ -7,6 +7,9 @@ L'utilisation des *skripts* est autorisée cependant il n'est en aucun cas autor
  
 libre à vous de contribuer à la création de se **Core.**
 
+# Release
+
+Les release seront effectué pour pouvoir vous offrir des version stables du Core Principal, libre à vous de téléchargé les version superieur si elle ne son pas encore placé en release, mais attendé vous à des bugs qui seront corrigé dans les prochaines version
 
 # Fichiers
 
