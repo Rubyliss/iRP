@@ -1,0 +1,97 @@
+#
+#
+# CONFIG
+#
+#
+#
+
+aliases:
+	BatonFouille = 4122
+
+#
+#
+#
+#
+# Message de join et leave custom
+#
+#
+#
+
+
+
+on join:
+	set join message to "&7[&2+&7] %colored prefix of player% %{nick.%player%}%"
+
+on quit:
+	set quit message to "&7[&c-&7] %colored prefix of player% %{nick.%player%}%"
+
+
+
+#
+#
+# CHAT RP / HRP / OPTION
+#
+#
+#
+
+
+
+
+options:
+	prefix_vocal: &7[&ei&aRP&7] %colored prefix of player% %{nick.%player%}% &7:&7
+	prefix_hrp: &7[&ei&aRP&7] %colored prefix of player% %{nick.%player%}% &7:&7
+	message_voc: &7[&ei&aRP&7] &aVous passez en mode vocal
+	message_crier: &7[&ei&aRP&7] &aVous passez en mode crier
+	message_hrp: &7[&ei&aRP&7] &aVous passez en mode hrp
+
+
+#
+#
+# CHAT RP / HRP / MAIN CORE
+#
+#
+#
+
+on join:
+	set {chat.%player%} to "local"
+
+
+command /rp:
+	permission: local.use
+	trigger:
+		message "{@message_voc}" to player
+		set {chat.%player%} to "local"
+
+
+command /hrp:
+	permission: hrp.use
+	trigger:
+		message "{@message_hrp}" to player
+		set {chat.%player%} to "hrp"
+
+on chat:
+	if {chat.%player%} is equal to "local":
+		cancel event
+		loop players in radius 20 of location of player:
+			message "{@prefix_vocal} %message%" to loop-player
+	else if {chat.%player%} is equal to "hrp":
+		cancel event
+		loop all players:
+			message "{@prefix_hrp} %message%" to loop-player
+
+
+command /nomrp [<text>]:
+	trigger:
+		if arg 1 is not set:
+			message "&7[&aNomRP&7] &9>> &cErreur (Nom RP Invalide)"
+			stop trigger
+		if arg 1 is set:
+			message "&7[&aNomRP&7] &9>> Votre nom est maintenant %arg 1%"
+			set {nick.%player%} to arg 1
+			set {nick-value.%player%} to true
+
+command /nomreset [<player>]:
+	trigger:
+		set {nick.%player%} to arg
+		set {nick-value.%player%} to false
+		message "&7[&aNomRP&7] &9>> Le nom à été reset"
