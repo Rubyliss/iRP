@@ -1,0 +1,87 @@
+aliases:
+	menupolice = 0812
+	menotteMenu = 4308
+	vous = 4213
+	BatonFouille = 4122
+	billetatm = 0044
+
+on right click on menupolice:
+	make player execute command "/menupolice"
+
+
+
+command /menupolice:
+	permission: gendarme.use
+	permission message: &7&lA P D &r&cVous n'avez pas la permission d'ouvrir la base de donner de l'APD
+	trigger:
+		wait 1 tick
+		send "&1[&7&lA P D&r&1]&a Ouverture de la base de données en cours ." to player
+		make console execute command "/playsound note.pling %player%"
+		wait 20 tick
+		make console execute command "/playsound note.pling %player%"
+		send "&1[&7&lA P D&r&1]&a Ouverture de la base de données en cours .." to player
+		wait 20 tick
+		make console execute command "/playsound note.pling %player%"
+		send "&1[&7&lA P D&r&1]&a Ouverture de la base de données en cours ..." to player
+		wait 20 tick
+		make console execute command "/playsound note.harp %player%"
+		open chest with 1 rows named "&cMenu Police de %player%" to player
+		format slot 0 of player with player head named "&c%player%" with lore "&aBienvenue %{nick.%player%}%" to be unstealable
+		format slot 3 of player with vous named "&3Information sur vous" with lore "&aCliquer pour voir vos informations, grade, arrestation." to run [make player execute command "/info"]
+		format slot 5 of player with menotteMenu named "&6Récuperé ses outils" with lore "&aCliquer ici pour récupéré votre baton de fouille||&amenotte et autre outils APD" to run [make player execute command "/gstuff"]
+		format slot 4 of player with player head named "&7Voir la base de donnée" with lore "&aCliquer ici pour voir la base de donné APD" to run [make player execute command "/policebase"]
+		format slot 8 of player with redstone named "&cFermé le menu police" to close
+
+command /policebase:
+	permission: gendarme.use
+	permission message: &7&lA P D &r&cVous n'avez pas la permission d'ouvrir la base de donner de l'APD
+	trigger:
+		open chest with 6 rows named "&1[&7&lA P D&r&1]" to player
+		wait 3 ticks
+		set {_slot} to 0
+		loop all players:
+			wait 1 tick
+			format slot {_slot} of player with player head named "&a%loop-player%" with lore "&7Casier :|| &a%{cj.infraction.%loop-player%::*}%||&7Voir le casier en détail avec &e&o/cj show (Joueurs)" to close then run [make player execute command "/cj show "]
+			add 1 to {_slot}
+
+
+
+command /casier [<player>]:
+	trigger:
+		if arg 1 is not set:
+			message "&7[&aCasier&7] &9>> &cErreur (Nom du joueur)"
+			stop trigger
+		if arg 1 is set:
+			wait 1 tick
+			send "&1==================== &7APD&1 ========================" to player
+			send "" to player
+			send "&8• &7Infractions de %arg-1%" to player
+			send "" to player
+			loop {casier.%arg-1%::*}:
+				send "&a%{casier.%arg-1%::*}%" to player
+			send "" to player
+			send "&1==================== &7APD&1 ========================" to player
+
+
+command /cj <text> [<text>] [<text>]:
+	permission: gendarme.use
+	trigger:
+		if arg 1 is "add":
+			#set {cj.infraction.%arg 2%::*} to arg-3
+			add arg-3 to {cj.infraction.%arg 2%::*}
+			message "&cInfraction &4%arg-3% &cajoutée au casier judiciaire de &6%arg-2%"
+		if arg 1 is "show":
+			message "&1==================== &7APD&1 ========================"
+			message ""
+			message "&8• &7Infractions de &l%arg 2%:"
+			loop {cj.infraction.%arg 2%::*}:
+				message "&b- &c%loop-value%"
+				message ""
+				message "&1==================== &7APD&1 ========================"
+		if arg 1 is "clear":
+			clear {cj.infraction.%arg 2%::*}
+			message "&1==================== &7APD&1 ========================"
+			message ""
+			message "&8• &7Infractions de &l%arg 2%&r&7 reset !"
+			message ""
+			message "&1==================== &7APD&1 ========================"
