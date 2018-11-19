@@ -1,21 +1,9 @@
-#
-#
-# CONFIG
-#
-#
-#
-
-aliases:
-	BatonFouille = 4122
-
-#
-#
-#
-#
-# Message de join et leave custom
-#
-#
-#
+#################################################################################
+#################################################################################
+#########################    iRP CORE       #####################################
+#################################################################################
+#################################################################################
+#################################################################################
 
 
 
@@ -27,12 +15,12 @@ on quit:
 
 
 
-#
-#
-# CHAT RP / HRP / OPTION
-#
-#
-#
+#################################################################################
+#################################################################################
+#########################    CHAT RP / HRP      #################################
+#################################################################################
+#################################################################################
+#################################################################################
 
 
 
@@ -41,7 +29,6 @@ options:
 	prefix_vocal: &7[&ei&aRP&7] %colored prefix of player% %{nick.%player%}% &7:&7
 	prefix_hrp: &7[&ei&aRP&7] %colored prefix of player% %{nick.%player%}% &7:&7
 	message_voc: &7[&ei&aRP&7] &aVous passez en mode vocal
-	message_crier: &7[&ei&aRP&7] &aVous passez en mode crier
 	message_hrp: &7[&ei&aRP&7] &aVous passez en mode hrp
 
 
@@ -95,3 +82,406 @@ command /nomreset [<player>]:
 		set {nick.%player%} to arg
 		set {nick-value.%player%} to false
 		message "&7[&aNomRP&7] &9>> Le nom à été reset"
+
+
+
+#################################################################################
+#################################################################################
+#########################    POLICE  CONFIGURATION       ########################
+#################################################################################
+#################################################################################
+#################################################################################
+
+
+
+on load:
+	broadcast "&7[&ei&aRP&7] &7Le système de Police est bien démaré."
+
+aliases:
+	BatonFouille = 4122 # Id du baton de fouille à changer
+	menotte = 4308 # Id des menottes à changer
+	ammende = 0280 # Id de l'objets permettant de donné une ammende à un joueurs, à changé aussi
+
+#################################################################################
+#################################################################################
+#########################    POLICE  CORE       #################################
+#################################################################################
+#################################################################################
+#################################################################################
+
+
+
+on right click:
+	if player's tool is a stick named "&7[&aFouille&7]":
+		if player have permission "gendarme.use":	
+			loop 7 times:
+				send "" to player
+	
+on right click on a player:
+	if player's tool is a BatonFouille named "&7[&aFouille&7]":
+		if player have permission "gendarme.use":	
+			if targeted player doesn't have permission "fouille.nope":
+				open the targeted player's inventory for the player
+				loop 2 times:
+					send "" to player
+				send "&1=================================================" to player
+				send "&8[&aFouille&8] &7Tu fouille &c%clicked entity% !" to player
+				send "&bRang : &r%colored prefix of player%" to player
+				send "&1=================================================" to player
+				loop 2 times:
+					send "" to targeted entity
+				send "&1=================================================" to targeted entity
+				send "&8[&aFouille&8] &7Tu es fouillé par &c%player% &7ne bouge pas !" to targeted entity
+				send "&1=================================================" to targeted entity
+				set {fouille} to true
+			else:
+				if player have permission "*":
+					open the targeted player's inventory for the player
+					loop 2 times:
+						send "" to player
+					send "&1=================================================" to player
+					send "&8[&aFouille&8]&8[&cAdministrateur&8] &7Tu fouille &c%clicked entity% !" to player
+					send "&1=================================================" to player
+					loop 5 times:
+						send "" to targeted entity
+					send "&1=================================================" to targeted entity
+					send "&8[&aFouille&8]&8[&cAdministrateur&8] &7Tu es fouillé par &c%player% &7ne bouge pas !" to targeted entity
+					send "&1=================================================" to targeted entity
+					set {fouille} to true
+				else:
+					loop 2 times:
+						send "" to player
+					send "&1=================================================" to player
+					send "&8[&aFouille&8]&8[&cAdministrateur&8] &cTu n'es pas autorisé à le fouiller !" to player
+					send "&1=================================================" to player
+					loop 2 times:
+						send "" to targeted entity
+					send "&1=================================================" to targeted entity
+					send "&8[&aFouille&8]&8[&cAdministrateur&8] &7&c%player% &7à voulus te fouiller !" to targeted entity
+					send "&1=================================================" to targeted entity
+		else:
+			send "&1=================================================" to player
+			send "&8[&aFouille&8] &cTu n'est pas Gendarme!" to player
+			send "&1=================================================" to player
+
+on close inventory:
+	if {fouille} is true:
+		loop 2 times:
+			send "" to player
+		send "&1=================================================" to player
+		send "&8[&aFouille&8] &7Tu ne fouille plus." to player
+		send "&bRang : &r%colored prefix of player%" to player
+		send "&1=================================================" to player
+		loop 5 times:
+			send "" to targeted entity
+		send "&1=================================================" to targeted entity
+		send "&8[&aFouille&8] &7Tu n'es plus fouillé par &c%player%" to targeted entity
+		send "&1=================================================" to targeted entity
+		set {fouille} to false
+	
+
+
+on rightclick with menotte:
+	if name of tool is "&7[&aMenotte&7]":
+		if targeted entity is a player:
+			if {menotte::%targeted player%} is not set:
+				send "&avous avez été menottés" to targeted player
+				send "&1=================================================" to player
+				send "&8[&aMenotte&8] &cTu a menottés!" to player
+				send "&1=================================================" to player
+				apply slowness of tier 255 to the targeted player for 99 days
+				set {menotte::%targeted player%} to true
+			else:
+				send "&avous avez été dé-menottés" to targeted player
+				send "&1=================================================" to player
+				send "&8[&aMenotte&8] &cTu a démenottés!" to player
+				send "&1=================================================" to player
+				remove slowness from the targeted player
+				delete {menotte::%targeted player%}
+
+
+on command "gstuff":
+	cancel event
+	if player has the permission "gendarme.use":
+		make console execute command "/playsound random.levelup %player%"
+		give BatonFouille named "&7[&aFouille&7]" to player
+		give menotte named "&7[&aMenotte&7]" to player
+		give stick named "&7[&aDonner une amende&7]" to player
+	else:
+		loop 5 times:
+			send "" to player
+		send "&1=================================================" to player
+		send "&8[&aEquipement&8] &cTu n es pas Gendarme!" to player
+		send "&1=================================================" to player
+
+command /info:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		make console execute command "/playsound random.levelup %player%"
+		send "&1=================================================" to player
+		send "" to player
+		send "&4Nom et prénom: &c%{nick.%player%}%" to player
+		send "" to player
+		send "&bMétier : &r%colored prefix of player%" to player
+		send "" to player
+		send "&1=================================================" to player
+
+
+
+on rightclick with ammende:
+	if name of tool is "&7[&aDonner une amende&7]":
+		if targeted entity is a player:
+			set {player.amende} to targeted player
+			make console execute command "/playsound random.levelup %player%"
+			wait 1 tick
+			set {amende.1} to 150
+			set {amende.2} to 80
+			set {amende.3} to 180
+			set {amende.4} to 95
+			set {amende.5} to 75
+			set {amende.6} to 750
+			set {amende.7} to 550
+			set {amende.8} to 250
+			set {amende.9} to 1200
+			set {amende.10} to 1900
+			set {amende.11} to 2700
+			set {amende.12} to 3500
+			set {amende.13} to 2500
+			open chest with 4 rows named "&cMenu amende de %targeted player%" to player
+			format slot 4 of player with player head named "&c%targeted player%" with lore "&a%colored prefix of player% %targeted player%" to be unstealable
+			format slot 9 of player with Red Wool named "&cDonner une amende" with lore "&aVitesse élevé en ville" to run [make player execute command "/amende1"]
+			format slot 10 of player with Red Wool named "&cDonner une amende" with lore "&aFeu rouge grillé" to run [make player execute command "/amende2"]
+			format slot 11 of player with Red Wool named "&cDonner une amende" with lore "&aConduite dangeureuse" to run [make player execute command "/amende3"]
+			format slot 12 of player with Red Wool named "&cDonner une amende" with lore "&aOutrage à agent" to run [make player execute command "/amende4"]
+			format slot 13 of player with Red Wool named "&cDonner une amende" with lore "&aNon respect de la propreté des lieux publique" to run [make player execute command "/amende5"]
+			format slot 14 of player with Red Wool named "&cDonner une amende" with lore "&aVole de véhicule" to run [make player execute command "/amende6"]
+			format slot 15 of player with Red Wool named "&cDonner une amende" with lore "&aVole de ressources" to run [make player execute command "/amende7"]
+			format slot 16 of player with Red Wool named "&cDonner une amende" with lore "&aTire en pleine rue" to run [make player execute command "/amende8"]
+			format slot 17 of player with Red Wool named "&cDonner une amende" with lore "&aPossession de drogue (Faible quantitées)" to run [make player execute command "/amende9"]
+			format slot 18 of player with Red Wool named "&cDonner une amende" with lore "&aPossession de drogue (Moyenne quantitées)" to run [make player execute command "/amende10"]
+			format slot 19 of player with Red Wool named "&cDonner une amende" with lore "&aPossession de drogue (Grande quantitées)" to run [make player execute command "/amende11"]
+			format slot 20 of player with Red Wool named "&cDonner une amende" with lore "&aTentative de braquage" to run [make player execute command "/amende12"]
+			format slot 21 of player with Red Wool named "&cDonner une amende" with lore "&aPossession arme illégal" to run [make player execute command "/amende13"]
+			format slot 22 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 23 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 24 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 25 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 26 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 27 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 28 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 29 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 30 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 31 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 32 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 33 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 34 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+			format slot 35 of player with Red Wool named "&cDonner une amende" with lore "&a-" to run [make player execute command "/info"]
+
+command /amende1:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison1} to "&cVitesse élevé en ville ||"
+		add {raison1} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.1}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.1}% &a€ &cpour %{raison1}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende2:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison2} to "&cFeu rouge grillé ||"
+		add {raison2} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.2}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.2}% &a€ &cpour %{raison2}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende3:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison3} to "&cConduite dangeureuse ||"
+		add {raison3} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.3}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.3}% &a€ &cpour %{raison3}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende4:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison4} to "&cOutrage à agent ||"
+		add {raison4} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.4}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.4}% &a€ &cpour %{raison4}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende5:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison5} to "&cNon respect de la propreté des lieux publique ||"
+		add {raison5} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.5}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.5}% &a€ &cpour %{raison5}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende6:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison6} to "&cVole de véhicule ||"
+		add {raison6} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.6}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.6}% &a€ &cpour %{raison6}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende7:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison7} to "&cVole de ressources ||"
+		add {raison7} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.7}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.7}% &a€ &cpour %{raison7}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende8:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison8} to "&cTire en pleine rue ||"
+		add {raison8} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.8}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.8}% &a€ &cpour %{raison8}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende9:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison9} to "&cPossession de drogue (Faible quantitées) ||"
+		add {raison9} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.9}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.9}% &a€ &cpour %{raison9}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende10:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison10} to "&cPossession de drogue (Moyenne quantitées) ||"
+		add {raison10} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.10}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.10}% &a€ &cpour %{raison10}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende11:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison11} to "&cPossession de drogue (Grande quantitées) ||"
+		add {raison11} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.11}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.11}% &a€ &cpour %{raison11}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende12:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison12} to "&cTentative de braquage ||"
+		add {raison12} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.12}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.12}% &a€ &cpour %{raison12}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
+
+command /amende13:
+	permission: gendarme.use
+	trigger:
+		wait 1 tick
+		set {raison13} to "&cPossession arme illégal ||"
+		add {raison13} to {cj.infraction.%{player.amende}%::*}
+		execute console command "/eco take %{player.amende}% %{amende.13}%"
+		wait 5 tick
+		broadcast "&1==================== &7APD&1 ========================"
+		broadcast ""
+		broadcast "&4&c%{player.amende}% à été amendé de &7%{amende.13}% &a€ &cpour %{raison13}%"
+		broadcast ""
+		broadcast "&bMétier : &r%colored prefix of player%"
+		broadcast ""
+		broadcast "&1==================== &7APD&1 ========================"
