@@ -23,6 +23,7 @@ Toute les commandes seront listé ici ainsi que différente explications sur l'u
 
 * /nomrp (texte) permet de choisir Son nom et prénom RolePlay ( /nomrp Alexis Lafaille)
 * /nomreset (joueurs) permet de réinitialiser le nom RolePlay d'un joueurs
+* /gstuff Permet au joueurs d'obtenir leurs équipement de police, baton de fouille etc ( Permission : gendarme.use )
 
 # Extention
 
