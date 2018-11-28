@@ -188,3 +188,76 @@ function RetirerATM(p: Player):
 		format gui slot 7 of {_p} with {_BilletSelectR100} to run function Retirer100(player)
 		format gui slot 8 of {_p} with {_BilletSelectR500} to run function Retirer500(player)
 		format gui slot 9 of {_p} with {_BilletSelectR1000} to run function Retirer1000(player)
+
+
+function Retirer10(p: Player):
+	if {_p}'s balance < 10:
+		send "&c&lErreur &r&c- Vous ne pouvez pas retirer de l'argent que vous ne possédez pas!" to {_p}
+		stop
+	if {_p}'s balance > 10:
+		give 1 Billet10 named "&aBillet de 10$" to {_p}
+		send "&a&lValidé &r&c- Vous venez bien de retirer 10$!" to {_p}
+		remove 10 from balance of {_p}
+
+function Retirer20(p: Player):
+	if {_p}'s balance < 20:
+		send "&c&lErreur &r&c- Vous ne pouvez pas retirer de l'argent que vous ne possédez pas!" to {_p}
+		stop
+	if {_p}'s balance > 20:
+		give 1 Billet10 named "&aBillet de 20$" to {_p}
+		send "&a&lValidé &r&c- Vous venez bien de retirer 20$!" to {_p}
+		remove 20 from balance of {_p}
+
+function Retirer30(p: Player):
+	if {_p}'s balance < 30:
+		send "&c&lErreur &r&c- Vous ne pouvez pas retirer de l'argent que vous ne possédez pas!" to {_p}
+		stop
+	if {_p}'s balance > 30:
+		give 1 Billet10 named "&aBillet de 30$" to {_p}
+		send "&a&lValidé &r&c- Vous venez bien de retirer 30$!" to {_p}
+		remove 30 from balance of {_p}
+
+function Retirer40(p: Player):
+	if {_p}'s balance < 40:
+		send "&c&lErreur &r&c- Vous ne pouvez pas retirer de l'argent que vous ne possédez pas!" to {_p}
+		stop
+	if {_p}'s balance > 40:
+		give 1 Billet40 named "&aBillet de 40$" to {_p}
+		send "&a&lValidé &r&c- Vous venez bien de retirer 40$!" to {_p}
+		remove 40 from balance of {_p}
+
+function Retirer50(p: Player):
+	if {_p}'s balance < 50:
+		send "&c&lErreur &r&c- Vous ne pouvez pas retirer de l'argent que vous ne possédez pas!" to {_p}
+		stop
+	if {_p}'s balance > 50:
+		give 1 Billet50 named "&aBillet de 50$" to {_p}
+		send "&a&lValidé &r&c- Vous venez bien de retirer 50$!" to {_p}
+		remove 50 from balance of {_p}
+
+function Retirer100(p: Player):
+	if {_p}'s balance < 100:
+		send "&c&lErreur &r&c- Vous ne pouvez pas retirer de l'argent que vous ne possédez pas!" to {_p}
+		stop
+	if {_p}'s balance > 100:
+		give 1 Billet100 named "&aBillet de 100$" to {_p}
+		send "&a&lValidé &r&c- Vous venez bien de retirer 100$!" to {_p}
+		remove 100 from balance of {_p}
+
+function Retirer500(p: Player):
+	if {_p}'s balance < 500:
+		send "&c&lErreur &r&c- Vous ne pouvez pas retirer de l'argent que vous ne possédez pas!" to {_p}
+		stop
+	if {_p}'s balance > 500:
+		give 1 Billet500 named "&aBillet de 500$" to {_p}
+		send "&a&lValidé &r&c- Vous venez bien de retirer 500$!" to {_p}
+		remove 500 from balance of {_p}
+
+function Retirer1000(p: Player):
+	if {_p}'s balance < 1000:
+		send "&c&lErreur &r&c- Vous ne pouvez pas retirer de l'argent que vous ne possédez pas!" to {_p}
+		stop
+	if {_p}'s balance > 1000:
+		give 1 Billet1000 named "&aBillet de 1000$" to {_p}
+		send "&a&lValidé &r&c- Vous venez bien de retirer 1000$!" to {_p}
+		remove 1000 from balance of {_p}
