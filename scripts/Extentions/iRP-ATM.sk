@@ -209,7 +209,7 @@ on right click on BlockATM:
 	wait 1 tick
 	format gui slot 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 and 26 of player with black stained glass pane named  " " to do nothing
 	format gui slot 11 of player with BilletSelection named "&6$ &aDéposer de l'argent &6$" with lore " " to run function DeposeATM(player)
-	format gui slot 13 of player with BilletSelection named "&bBienvenue sur votre compte en banque" with lore "&aVotre compte dispose de &e%player's money% &a$" to do nothing
+	format gui slot 13 of player with Player Head named "&bBienvenue sur votre compte en banque" with lore "&aVotre compte dispose de &e%player's money% &a$" to do nothing
 	format gui slot 15 of player with BilletSelection named "&6$ &4Retirer de l'argent &6$" with lore " " to run function RetirerATM(player)
 
 
