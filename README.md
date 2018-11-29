@@ -19,6 +19,13 @@ Toutes les extentions se trouves dans le dossier *Extentions*
 
 # Utilisations
 
+## ATTENTION ! Il est obligatoire d'avoir les Addons suivant :
+* SkQuery
+* SkRayFall
+* Tuske
+* Tuske-PikachuPatch v2 ( Patch de TusKe si il ne marche pas )
+* WildSkript ( Non obligatoire, cependant si le Core ne marche pas essayer de le mettre )
+
 Toute les commandes seront listé ici ainsi que différente explications sur l'utilisation du Core et son instalations.
 
 * /nomrp (texte) permet de choisir Son nom et prénom RolePlay ( /nomrp Alexis Lafaille)
