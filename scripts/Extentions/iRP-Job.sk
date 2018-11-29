@@ -18,6 +18,8 @@
 #
 #
 # =================================================================================================
+aliases:
+	Spruce = 17:1 # Ne pas toucher
 
 
 command /bucheron:
@@ -28,3 +30,21 @@ command /bucheron:
 command /mineur:
 	trigger:
 		give 1 iron pickaxe named "&aPioche de mineur" to player
+
+
+
+on break of cobble:
+	if player is holding any pickaxe:
+		wait 1 tick
+		drop 1 Cobble named "&aPierre à nétoyer" at location of event-block
+		set block at location of event-block to air
+		wait 5 seconds
+		set block at location of event-block to Cobble
+
+on break of Spruce:
+	if player is holding any axe:
+		wait 1 tick
+		drop 1 Spruce named "&aBois fraichement coupé" at location of event-block
+		set block at location of event-block to air
+		wait 5 seconds
+		set block at location of event-block to Spruce
