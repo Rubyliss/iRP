@@ -31,6 +31,11 @@ aliases:
 #
 # ===================================================================================
 
+#
+# 
+# Function déposer
+#
+#
 
 function Depose10(p: Player):
 	set {_Depose} to number of Billet10 named "&aBillet de 10$" in {_p}'s inventory
@@ -125,7 +130,11 @@ function Depose1000(p: Player):
 
 # ================================================================================
 
-
+#
+# 
+# Function Retiré
+#
+#
 
 function Retirer10(p: Player):
 	if {_p}'s balance < 10:
