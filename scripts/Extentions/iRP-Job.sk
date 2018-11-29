@@ -1,0 +1,30 @@
+# =================================================================================================
+#
+#
+# iRP Job | Ce Skript sert pour la mise en place de métier.
+#
+#
+#
+# =================================================================================================
+
+
+# CONFIG NON SUPPORTER POUR L'INSTANT !
+
+# =================================================================================================
+#
+#
+# Ne rien touchez à partir de cette instant sauf si vous vous savez se que vous faite.
+#
+#
+#
+# =================================================================================================
+
+
+command /bucheron:
+	trigger:
+		give 1 iron axe named "&aHache de bucheron" to player
+
+
+command /mineur:
+	trigger:
+		give 1 iron pickaxe named "&aPioche de mineur" to player
