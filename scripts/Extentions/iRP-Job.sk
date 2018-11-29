@@ -35,6 +35,7 @@ command /mineur:
 
 on break of cobble:
 	if player is holding any pickaxe:
+		add 1 to {pierre.casse}
 		wait 1 tick
 		drop 1 Cobble named "&aPierre à nétoyer" at location of event-block
 		set block at location of event-block to air
@@ -43,6 +44,7 @@ on break of cobble:
 
 on break of Spruce:
 	if player is holding any axe:
+		add 1 to {buche.casse}
 		wait 1 tick
 		drop 1 Spruce named "&aBois fraichement coupé" at location of event-block
 		set block at location of event-block to air
