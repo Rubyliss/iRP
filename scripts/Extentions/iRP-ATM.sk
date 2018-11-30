@@ -212,6 +212,66 @@ function Retirer1000(p: Player):
 
 # ===================================================================================
 
+
+function DeposeATM(p: Player):
+	open chest with 6 rows named "&aATM | Déposer" to {_p}
+	set {_BilletSelectD10} to Billet10 named "&aDéposer 10$"
+	set {_BilletSelectD20} to Billet20 named "&aDéposer 20$"
+	set {_BilletSelectD30} to Billet30 named "&aDéposer 30$"
+	set {_BilletSelectD40} to Billet40 named "&aDéposer 40$"
+	set {_BilletSelectD50} to Billet50 named "&aDéposer 50$"
+	set {_BilletSelectD100} to Billet100 named "&aDéposer 100$"
+	set {_BilletSelectD500} to Billet500 named "&aDéposer 500$"
+	set {_BilletSelectD1000} to Billet1000 named "&aDéposer 1000$"
+	set line 1 of lore of {_BilletSelectD10} to "&7Cliquer pour déposer 10$"
+	set line 1 of lore of {_BilletSelectD20} to "&7Cliquer pour déposer 20$"
+	set line 1 of lore of {_BilletSelectD30} to "&7Cliquer pour déposer 30$"
+	set line 1 of lore of {_BilletSelectD40} to "&7Cliquer pour déposer 40$"
+	set line 1 of lore of {_BilletSelectD50} to "&7Cliquer pour déposer 50$"
+	set line 1 of lore of {_BilletSelectD100} to "&7Cliquer pour déposer 100$"
+	set line 1 of lore of {_BilletSelectD500} to "&7Cliquer pour déposer 500$"
+	set line 1 of lore of {_BilletSelectD1000} to "&7Cliquer pour déposer 1000$"
+	format gui slot 0 of {_p} with {_BilletSelectD10} to run function Depose10({_p})
+	format gui slot 2 of {_p} with {_BilletSelectD20} to run function Depose20({_p})
+	format gui slot 4 of {_p} with {_BilletSelectD30} to run function Depose30({_p})
+	format gui slot 6 of {_p} with {_BilletSelectD40} to run function Depose40({_p})
+	format gui slot 8 of {_p} with {_BilletSelectD50} to run function Depose50({_p})
+	format gui slot 11 of {_p} with {_BilletSelectD100} to run function Depose100({_p})
+	format gui slot 13 of {_p} with {_BilletSelectD500} to run function Depose500({_p})
+	format gui slot 15 of {_p} with {_BilletSelectD1000} to run function Depose1000({_p})
+
+
+
+function RetirerATM(p: Player):
+	open chest with 6 rows named "&aATM | Retirer" to {_p}
+	set {_BilletSelectR10} to Billet10 named "&aRetirer 10$"
+	set {_BilletSelectR20} to Billet20 named "&aRetirer 20$"
+	set {_BilletSelectR30} to Billet30 named "&aRetirer 30$"
+	set {_BilletSelectR40} to Billet40 named "&aRetirer 40$"
+	set {_BilletSelectR50} to Billet50 named "&aRetirer 50$"
+	set {_BilletSelectR100} to Billet100 named "&aRetirer 100$"
+	set {_BilletSelectR500} to Billet500 named "&aRetirer 500$"
+	set {_BilletSelectR1000} to Billet1000 named "&aRetirer 1000$"
+	set line 1 of lore of {_BilletSelectR10} to "&7Cliquer pour retirer 10$"
+	set line 1 of lore of {_BilletSelectR20} to "&7Cliquer pour retirer 20$"
+	set line 1 of lore of {_BilletSelectR30} to "&7Cliquer pour retirer 30$"
+	set line 1 of lore of {_BilletSelectR40} to "&7Cliquer pour retirer 40$"
+	set line 1 of lore of {_BilletSelectR50} to "&7Cliquer pour retirer 50$"
+	set line 1 of lore of {_BilletSelectR100} to "&7Cliquer pour retirer 100$"
+	set line 1 of lore of {_BilletSelectR500} to "&7Cliquer pour retirer 500$"
+	set line 1 of lore of {_BilletSelectR1000} to "&7Cliquer pour retirer 1000$"
+	format gui slot 0 of {_p} with {_BilletSelectR10} to run function Retirer10({_p})
+	format gui slot 2 of {_p} with {_BilletSelectR20} to run function Retirer20({_p})
+	format gui slot 4 of {_p} with {_BilletSelectR30} to run function Retirer30({_p})
+	format gui slot 6 of {_p} with {_BilletSelectR40} to run function Retirer40({_p})
+	format gui slot 8 of {_p} with {_BilletSelectR50} to run function Retirer50({_p})
+	format gui slot 11 of {_p} with {_BilletSelectR100} to run function Retirer100({_p})
+	format gui slot 13 of {_p} with {_BilletSelectR500} to run function Retirer500({_p})
+	format gui slot 15 of {_p} with {_BilletSelectR1000} to run function Retirer1000({_p})
+
+
+
+
 on right click on BlockATM:
 	cancel event
 	open chest with 3 rows named "&cATM" to player
@@ -220,60 +280,3 @@ on right click on BlockATM:
 	format gui slot 11 of player with BilletSelection named "&6$ &aDéposer de l'argent &6$" with lore " " to run function DeposeATM(player)
 	format gui slot 13 of player with Player Head named "&bBienvenue sur votre compte en banque" with lore "&aVotre compte dispose de &e%player's money% &a$" to do nothing
 	format gui slot 15 of player with BilletSelection named "&6$ &4Retirer de l'argent &6$" with lore " " to run function RetirerATM(player)
-
-
-function DeposeATM(p: Player):
-	create a gui with virtual chest with 6 rows named "&aATM | Déposer":
-		set {_BilletSelectD10} to Billet10 named "&aDéposer 10$"
-		set {_BilletSelectD20} to Billet20 named "&aDéposer 20$"
-		set {_BilletSelectD30} to Billet30 named "&aDéposer 30$"
-		set {_BilletSelectD40} to Billet40 named "&aDéposer 40$"
-		set {_BilletSelectD50} to Billet50 named "&aDéposer 50$"
-		set {_BilletSelectD100} to Billet100 named "&aDéposer 100$"
-		set {_BilletSelectD500} to Billet500 named "&aDéposer 500$"
-		set {_BilletSelectD1000} to Billet1000 named "&aDéposer 1000$"
-		set line 1 of lore of {_BilletSelectD10} to "&7Cliquer pour déposer 10$"
-		set line 1 of lore of {_BilletSelectD20} to "&7Cliquer pour déposer 20$"
-		set line 1 of lore of {_BilletSelectD30} to "&7Cliquer pour déposer 30$"
-		set line 1 of lore of {_BilletSelectD40} to "&7Cliquer pour déposer 40$"
-		set line 1 of lore of {_BilletSelectD50} to "&7Cliquer pour déposer 50$"
-		set line 1 of lore of {_BilletSelectD100} to "&7Cliquer pour déposer 100$"
-		set line 1 of lore of {_BilletSelectD500} to "&7Cliquer pour déposer 500$"
-		set line 1 of lore of {_BilletSelectD1000} to "&7Cliquer pour déposer 1000$"
-		format gui slot 0 of {_p} with {_BilletSelectD10} to run function Depose10({_p})
-		format gui slot 2 of {_p} with {_BilletSelectD20} to run function Depose20({_p})
-		format gui slot 4 of {_p} with {_BilletSelectD30} to run function Depose30({_p})
-		format gui slot 6 of {_p} with {_BilletSelectD40} to run function Depose40({_p})
-		format gui slot 8 of {_p} with {_BilletSelectD50} to run function Depose50({_p})
-		format gui slot 11 of {_p} with {_BilletSelectD100} to run function Depose100({_p})
-		format gui slot 13 of {_p} with {_BilletSelectD500} to run function Depose500({_p})
-		format gui slot 15 of {_p} with {_BilletSelectD1000} to run function Depose1000({_p})
-
-
-
-function RetirerATM(p: Player):
-	create a gui with virtual chest with 6 rows named "&aATM | Retirer":
-		set {_BilletSelectR10} to Billet10 named "&aRetirer 10$"
-		set {_BilletSelectR20} to Billet20 named "&aRetirer 20$"
-		set {_BilletSelectR30} to Billet30 named "&aRetirer 30$"
-		set {_BilletSelectR40} to Billet40 named "&aRetirer 40$"
-		set {_BilletSelectR50} to Billet50 named "&aRetirer 50$"
-		set {_BilletSelectR100} to Billet100 named "&aRetirer 100$"
-		set {_BilletSelectR500} to Billet500 named "&aRetirer 500$"
-		set {_BilletSelectR1000} to Billet1000 named "&aRetirer 1000$"
-		set line 1 of lore of {_BilletSelectR10} to "&7Cliquer pour retirer 10$"
-		set line 1 of lore of {_BilletSelectR20} to "&7Cliquer pour retirer 20$"
-		set line 1 of lore of {_BilletSelectR30} to "&7Cliquer pour retirer 30$"
-		set line 1 of lore of {_BilletSelectR40} to "&7Cliquer pour retirer 40$"
-		set line 1 of lore of {_BilletSelectR50} to "&7Cliquer pour retirer 50$"
-		set line 1 of lore of {_BilletSelectR100} to "&7Cliquer pour retirer 100$"
-		set line 1 of lore of {_BilletSelectR500} to "&7Cliquer pour retirer 500$"
-		set line 1 of lore of {_BilletSelectR1000} to "&7Cliquer pour retirer 1000$"
-		format gui slot 0 of {_p} with {_BilletSelectR10} to run function Retirer10({_p})
-		format gui slot 2 of {_p} with {_BilletSelectR20} to run function Retirer20({_p})
-		format gui slot 4 of {_p} with {_BilletSelectR30} to run function Retirer30({_p})
-		format gui slot 6 of {_p} with {_BilletSelectR40} to run function Retirer40({_p})
-		format gui slot 8 of {_p} with {_BilletSelectR50} to run function Retirer50({_p})
-		format gui slot 11 of {_p} with {_BilletSelectR100} to run function Retirer100({_p})
-		format gui slot 13 of {_p} with {_BilletSelectR500} to run function Retirer500({_p})
-		format gui slot 15 of {_p} with {_BilletSelectR1000} to run function Retirer1000({_p})
