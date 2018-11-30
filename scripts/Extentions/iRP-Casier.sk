@@ -1,9 +1,9 @@
 aliases:
-	menupolice = 0812
-	menotteMenu = 4308
-	vous = 4213
-	BatonFouille = 4122
-	billetatm = 0044
+	menupolice = 11
+	menotteMenu = 12
+	vous = 13
+	BatonFouille = 14
+	billetatm = 15
 
 on right click on menupolice:
 	make player execute command "/menupolice"
