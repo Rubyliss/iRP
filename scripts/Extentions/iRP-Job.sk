@@ -23,6 +23,65 @@ aliases:
 	Wood = 5
 
 
+function TCobble(p: player):
+	set {_nb} to number of Cobble named "&aPierre à nétoyer" in {_p}'s inventory
+	if {_nb} > 1:
+		send "&a %{_nb}% sont en train d'etre traité ." to {_p}
+		wait 1 seconds
+		send "&a %{_nb}% sont en train d'etre traité .." to {_p}
+		wait 1 seconds
+		send "&a %{_nb}% sont en train d'etre traité ..." to {_p}
+		wait 1 seconds
+		remove {_nb} of Cobble named "&aPierre à nétoyer" from {_p}'s inventory
+		make console execute command "/playsound random.levelup %{_p}%"
+		give {_nb} of stone named "&aPierre nettoyée" to {_p}
+		loop {_nb} times:
+			chance of 1%:
+				give {_p} of diamond named "&bDiamand" to {_p}
+			chance of 3%:
+				give {_p} of Gold ingot named "&5Lingot en or" to {_p}
+			chance of 5%:
+				give {_p} of Iron ingot named "&7Lingot de fer" to {_p}
+			chance of 10%:
+				give {_p} of Coal named "&8Charbon" to {_p}
+	else:
+		send "&aTu à 0 pierre à nettoyer" to {_p}
+
+
+function TBuche(p: player):
+	set {_nb} to number of Spruce named "&aBois fraichement coupé" in {_p}'s inventory
+	if {_nb} > 1:
+		send "&a %{_nb}% sont en train d'etre traité ." to {_p}
+		wait 1 seconds
+		send "&a %{_nb}% sont en train d'etre traité .." to {_p}
+		wait 1 seconds
+		send "&a %{_nb}% sont en train d'etre traité ..." to {_p}
+		wait 1 seconds
+		remove {_nb} of Spruce named "&aBois fraichement coupé" from {_p}'s inventory
+		make console execute command "/playsound random.levelup %{_p}%"
+		give {_nb} of Wood named "&aPlanche fraichement coupé" to {_p}
+
+
+
+
+
+
+
+
+
+# ======================================================================================== 
+#
+#
+#
+#
+# Code pure, ne rien changé 
+#
+#
+#
+# =========================================================================================
+
+
+
 command /bucheron:
 	trigger:
 		give 1 iron axe named "&aHache de bucheron" to player
@@ -64,40 +123,3 @@ command /traitement:
 		format gui slot 15 of player with Spruce named "&aTransformer ses buches" with lore "&7Cliquer pour transformer vos buche en planche à vendre " to run function TBuche(player)
 
 
-function TCobble(p: player):
-	set {_nb} to number of Cobble named "&aPierre à nétoyer" in {_p}'s inventory
-	if {_nb} > 1:
-		send "&a %{_nb}% sont en train d'etre traité ." to {_p}
-		wait 1 seconds
-		send "&a %{_nb}% sont en train d'etre traité .." to {_p}
-		wait 1 seconds
-		send "&a %{_nb}% sont en train d'etre traité ..." to {_p}
-		wait 1 seconds
-		remove {_nb} of Cobble named "&aPierre à nétoyer" from {_p}'s inventory
-		make console execute command "/playsound random.levelup %{_p}%"
-		give {_nb} of stone named "&aPierre nettoyée" to {_p}
-		loop {_nb} times:
-			chance of 1%:
-				give {_p} of diamond named "&bDiamand" to {_p}
-			chance of 3%:
-				give {_p} of Gold ingot named "&5Lingot en or" to {_p}
-			chance of 5%:
-				give {_p} of Iron ingot named "&7Lingot de fer" to {_p}
-			chance of 10%:
-				give {_p} of Coal named "&8Charbon" to {_p}
-	else:
-		send "&aTu à 0 pierre à nettoyer" to {_p}
-
-
-function TBuche(p: player):
-	set {_nb} to number of Spruce named "&aBois fraichement coupé" in {_p}'s inventory
-	if {_nb} > 1:
-		send "&a %{_nb}% sont en train d'etre traité ." to {_p}
-		wait 1 seconds
-		send "&a %{_nb}% sont en train d'etre traité .." to {_p}
-		wait 1 seconds
-		send "&a %{_nb}% sont en train d'etre traité ..." to {_p}
-		wait 1 seconds
-		remove {_nb} of Spruce named "&aBois fraichement coupé" from {_p}'s inventory
-		make console execute command "/playsound random.levelup %{_p}%"
-		give {_nb} of Wood named "&aPlanche fraichement coupé" to {_p}
