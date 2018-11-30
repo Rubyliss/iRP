@@ -26,11 +26,11 @@ aliases:
 function TCobble(p: player):
 	set {_nb} to number of Cobble named "&aPierre à nétoyer" in {_p}'s inventory
 	if {_nb} > 1:
-		send "&a %{_nb}% sont en train d'etre traité ." to {_p}
+		send "&a %{_nb}% pierre(s) sont en train d'etre traité ." to {_p}
 		wait 1 seconds
-		send "&a %{_nb}% sont en train d'etre traité .." to {_p}
+		send "&a %{_nb}% pierre(s) sont en train d'etre traité .." to {_p}
 		wait 1 seconds
-		send "&a %{_nb}% sont en train d'etre traité ..." to {_p}
+		send "&a %{_nb}% cobble(s) sont en train d'etre traité ..." to {_p}
 		wait 1 seconds
 		remove {_nb} of Cobble named "&aPierre à nétoyer" from {_p}'s inventory
 		make console execute command "/playsound random.levelup %{_p}%"
@@ -51,15 +51,17 @@ function TCobble(p: player):
 function TBuche(p: player):
 	set {_nb} to number of Spruce named "&aBois fraichement coupé" in {_p}'s inventory
 	if {_nb} > 1:
-		send "&a %{_nb}% sont en train d'etre traité ." to {_p}
+		send "&a %{_nb}% Buche(s) sont en train d'etre traité ." to {_p}
 		wait 1 seconds
-		send "&a %{_nb}% sont en train d'etre traité .." to {_p}
+		send "&a %{_nb}% Buche(s) sont en train d'etre traité .." to {_p}
 		wait 1 seconds
-		send "&a %{_nb}% sont en train d'etre traité ..." to {_p}
+		send "&a %{_nb}% Buche(s) sont en train d'etre traité ..." to {_p}
 		wait 1 seconds
 		remove {_nb} of Spruce named "&aBois fraichement coupé" from {_p}'s inventory
 		make console execute command "/playsound random.levelup %{_p}%"
 		give {_nb} of Wood named "&aPlanche fraichement coupé" to {_p}
+	else:
+		send "&aTu à 0 buche à transformer" to {_p}
 
 
 
