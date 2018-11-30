@@ -214,7 +214,7 @@ function Retirer1000(p: Player):
 
 
 function DeposeATM(p: Player):
-	open chest with 6 rows named "&aATM | Déposer" to {_p}
+	open chest with 3 rows named "&aATM | Déposer" to {_p}
 	set {_BilletSelectD10} to Billet10 named "&aDéposer 10$"
 	set {_BilletSelectD20} to Billet20 named "&aDéposer 20$"
 	set {_BilletSelectD30} to Billet30 named "&aDéposer 30$"
@@ -243,7 +243,7 @@ function DeposeATM(p: Player):
 
 
 function RetirerATM(p: Player):
-	open chest with 6 rows named "&aATM | Retirer" to {_p}
+	open chest with 3 rows named "&aATM | Retirer" to {_p}
 	set {_BilletSelectR10} to Billet10 named "&aRetirer 10$"
 	set {_BilletSelectR20} to Billet20 named "&aRetirer 20$"
 	set {_BilletSelectR30} to Billet30 named "&aRetirer 30$"
